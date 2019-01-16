@@ -6,14 +6,14 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Main {
+public class Runner {
 
     public static void main(String[] args) throws IOException {
-        List<String> info = exec("ffmpeg -version");
+        List<String> info = new Runner().exec("ffmpeg -version");
         info.forEach(System.out::println);
     }
 
-    private static List<String> exec(String command) throws IOException {
+    public List<String> exec(String command) throws IOException {
         Process process = Runtime.getRuntime().exec(command);
 
         List<String> messages = new LinkedList<>();
