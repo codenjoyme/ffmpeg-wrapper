@@ -1,6 +1,5 @@
 package com.apofig.ffmpeg;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,11 +9,12 @@ public class Splitter {
     private String input;
     private List<Part> parts;
 
-    public Splitter(String input) {
-        this.input = input;
+    public Splitter(Runner runner) {
         parts = new LinkedList<>();
-        runner = new RunnerImpl();
+        this.runner = runner;
     }
+
+
 
     public void run() {
         parts.forEach(this::execPart);
@@ -38,6 +38,11 @@ public class Splitter {
 
     public Splitter part(Part part) {
         parts.add(part);
+        return this;
+    }
+
+    public Splitter input(String input) {
+        this.input = input;
         return this;
     }
 
