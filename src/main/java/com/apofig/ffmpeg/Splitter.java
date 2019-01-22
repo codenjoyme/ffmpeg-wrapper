@@ -16,15 +16,7 @@ public class Splitter {
         runner = new Runner();
     }
 
-    public static void main(String[] args) {
-        new Splitter("work/input.flv")
-                .part(Part.time("00:00:00", "00:30:00").to("work/output1.flv"))
-                .part(Part.time("00:30:00", "01:00:00").to("work/output2.flv"))
-                .part(Part.time("01:00:00", "01:30:00").to("work/output3.flv"))
-                .run();
-    }
-
-    private void run() {
+    public void run() {
         parts.forEach(this::execPart);
     }
 
@@ -47,12 +39,12 @@ public class Splitter {
         }
     }
 
-    private Splitter part(Part part) {
+    public Splitter part(Part part) {
         parts.add(part);
         return this;
     }
 
-    private static class Part {
+    public static class Part {
 
         private final String from;
         private final String to;
