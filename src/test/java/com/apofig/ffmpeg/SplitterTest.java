@@ -1,22 +1,8 @@
 package com.apofig.ffmpeg;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-public class SplitterTest {
-
-    private Runner runner;
-
-    @Before
-    public void setUp() {
-        runner = mock(Runner.class);
-    }
+public class SplitterTest extends AbstractRunnerTest {
 
     @Test
     public void shouldExecThreeTimes() {
@@ -46,9 +32,4 @@ public class SplitterTest {
         assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/output1.flv]");
     }
 
-    private void assertExec(String expected) {
-        ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
-        verify(runner, atLeastOnce()).exec(commandCaptor.capture());
-        assertEquals(expected, commandCaptor.getAllValues().toString());
-    }
 }
