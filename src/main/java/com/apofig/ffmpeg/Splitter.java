@@ -13,7 +13,7 @@ public class Splitter {
     public Splitter(String input) {
         this.input = input;
         parts = new LinkedList<>();
-        runner = new Runner();
+        runner = new RunnerImpl();
     }
 
     public void run() {
@@ -22,21 +22,18 @@ public class Splitter {
 
     private void execPart(Part part) {
         String template = "ffmpeg -i %s -vcodec copy -acodec copy -ss %s -to %s %s";
-        try {
-            String command = String.format(template,
-                    input,
-                    part.getFrom(),
-                    part.getTo(),
-                    part.getOutput());
-            System.out.println(command);
 
-            List<String> messages = runner.exec(command);
+        String command = String.format(template,
+                input,
+                part.getFrom(),
+                part.getTo(),
+                part.getOutput());
+        System.out.println(command);
 
-            messages.forEach(System.out::println);
-            System.out.println("-------------------------------------------------------");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<String> messages = runner.exec(command);
+
+        messages.forEach(System.out::println);
+        System.out.println("-------------------------------------------------------");
     }
 
     public Splitter part(Part part) {
