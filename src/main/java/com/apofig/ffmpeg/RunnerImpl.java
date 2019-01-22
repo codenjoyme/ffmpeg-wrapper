@@ -17,15 +17,16 @@ public class RunnerImpl implements Runner {
     public List<String> exec(String command) {
         List<String> messages = new LinkedList<>();
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            Process process = new ProcessBuilder(command.split(" ")).redirectErrorStream(true).start();
 
             try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = input.readLine()) != null) {
                     messages.add(line);
                 }
+                process.waitFor();
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.fillInStackTrace();
             messages.add("Error: " + e.toString());
         }
