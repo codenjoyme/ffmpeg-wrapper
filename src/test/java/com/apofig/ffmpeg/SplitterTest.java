@@ -1,5 +1,6 @@
 package com.apofig.ffmpeg;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -10,11 +11,15 @@ import static org.mockito.Mockito.verify;
 
 public class SplitterTest {
 
-    @Test
-    public void part() {
-        // given
-        Runner runner = mock(Runner.class);
+    private Runner runner;
 
+    @Before
+    public void setUp() {
+        runner = mock(Runner.class);
+    }
+
+    @Test
+    public void shouldExecThreeTimes() {
         // when
         new Splitter(runner)
                 .input("work/input.flv")
@@ -24,12 +29,26 @@ public class SplitterTest {
                 .run();
 
         // then
+        assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/output1.flv, " +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:30:00 work/output2.flv, " +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:30:00 -to 01:40:23 work/output3.flv]");
+    }
+
+    @Test
+    public void shouldExecOneTimes() {
+        // when
+        new Splitter(runner)
+                .input("work/input.flv")
+                .part(Splitter.Part.time("00:00:00", "00:30:00").to("work/output1.flv"))
+                .run();
+
+        // then
+        assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/output1.flv]");
+    }
+
+    private void assertExec(String expected) {
         ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
         verify(runner, atLeastOnce()).exec(commandCaptor.capture());
-
-        assertEquals("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/output1.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:30:00 work/output2.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:30:00 -to 01:40:23 work/output3.flv]",
-                commandCaptor.getAllValues().toString());
+        assertEquals(expected, commandCaptor.getAllValues().toString());
     }
 }
