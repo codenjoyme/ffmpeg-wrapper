@@ -36,7 +36,11 @@ public class Joiner {
 
         try (PrintWriter writer = new PrintWriter(listFile)) {
 
-            parts.forEach(part -> writer.printf("file '%s'\n", part));
+            parts.forEach(part -> {
+                String line = String.format("file '%s'", part);
+                System.out.println(line);
+                writer.println(line);
+            });
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

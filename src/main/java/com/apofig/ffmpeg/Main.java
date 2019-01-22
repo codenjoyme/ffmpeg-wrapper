@@ -20,9 +20,9 @@ public class Main {
 
         new Joiner(runner)
                 .output("work/done.flv")
-                .part("work/output1.flv")
-                .part("work/output2.flv")
-                .part("work/output3.flv")
+                .part("output1.flv")
+                .part("output2.flv")
+                .part("output3.flv")
                 .run();
 
     }
