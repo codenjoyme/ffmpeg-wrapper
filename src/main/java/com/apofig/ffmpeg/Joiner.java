@@ -1,5 +1,6 @@
 package com.apofig.ffmpeg;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
@@ -28,7 +29,10 @@ public class Joiner {
 
     public void run() {
         String template = "ffmpeg -f concat -safe 0 -i %s -c copy %s";
-        String listFile = "list.txt";
+
+        String listFile = new File(output).getParent() + "/list.txt";
+
+        new File(listFile).delete();
 
         try (PrintWriter writer = new PrintWriter(listFile)) {
 

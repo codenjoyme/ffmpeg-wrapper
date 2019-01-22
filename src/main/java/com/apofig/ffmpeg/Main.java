@@ -18,6 +18,12 @@ public class Main {
                 .time("01:40:23")
                 .run();
 
+        new Joiner(runner)
+                .output("work/done.flv")
+                .part("work/output1.flv")
+                .part("work/output2.flv")
+                .part("work/output3.flv")
+                .run();
 
     }
 }
