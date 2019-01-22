@@ -19,7 +19,7 @@ public abstract class AbstractRunnerTest {
 
     public void assertExec(String expected) {
         ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
-        verify(runner, atLeastOnce()).exec(commandCaptor.capture());
+        verify(runner, atLeastOnce()).execOutput(commandCaptor.capture());
         assertEquals(expected, commandCaptor.getAllValues().toString());
     }
 }

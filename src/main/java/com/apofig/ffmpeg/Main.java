@@ -8,14 +8,16 @@ public class Main {
         new Splitter2(runner)
                 .input("work/input.flv")
                 .time("00:00:00")
-                .save("work/2output1.flv")
+                .save("work/output1.flv")
                 .time("00:30:00")
                 .remove()
                 .time("01:00:00")
-                .save("work/2output2.flv")
+                .save("work/output2.flv")
                 .time("01:30:00")
-                .save("work/2output3.flv")
+                .save("work/output3.flv")
                 .time("01:40:23")
                 .run();
+
+
     }
 }

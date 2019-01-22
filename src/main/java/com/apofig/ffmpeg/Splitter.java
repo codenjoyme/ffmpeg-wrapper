@@ -28,12 +28,8 @@ public class Splitter {
                 part.getFrom(),
                 part.getTo(),
                 part.getOutput());
-        System.out.println(command);
 
-        List<String> messages = runner.exec(command);
-
-        messages.forEach(System.out::println);
-        System.out.println("-------------------------------------------------------");
+        runner.execOutput(command);
     }
 
     public Splitter part(Part part) {
