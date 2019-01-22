@@ -55,4 +55,8 @@ public class Splitter2 {
         }
         splitter.run();
     }
+
+    public String getLast() {
+        return times.get(times.size() - 1);
+    }
 }

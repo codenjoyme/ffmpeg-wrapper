@@ -14,8 +14,6 @@ public class Splitter {
         this.runner = runner;
     }
 
-
-
     public void run() {
         parts.forEach(this::execPart);
     }

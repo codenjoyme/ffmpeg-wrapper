@@ -30,13 +30,14 @@ public class Joiner {
     public void run() {
         String template = "ffmpeg -f concat -safe 0 -i %s -c copy %s";
 
-        String listFile = new File(output).getParent() + "/list.txt";
+        String listFile = getWork() + "list.txt";
 
         new File(listFile).delete();
 
         try (PrintWriter writer = new PrintWriter(listFile)) {
 
             parts.forEach(part -> {
+                part = part.replaceAll(getWork(), "");
                 String line = String.format("file '%s'", part);
                 System.out.println(line);
                 writer.println(line);
@@ -53,4 +54,11 @@ public class Joiner {
         runner.execOutput(command);
     }
 
+    public List<String> getParts() {
+        return parts;
+    }
+
+    public String getWork() {
+        return new File(output).getParent() + "/";
+    }
 }

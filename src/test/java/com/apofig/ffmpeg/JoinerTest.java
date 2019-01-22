@@ -1,15 +1,8 @@
 package com.apofig.ffmpeg;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class JoinerTest extends AbstractRunnerTest {
 
@@ -26,14 +19,9 @@ public class JoinerTest extends AbstractRunnerTest {
         // then
         assertExec("[ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv]");
         assertFile("work/list.txt",
-                "[file 'work/output1.flv', " +
-                        "file 'work/output2.flv', " +
-                        "file 'work/output3.flv']");
-    }
-
-    private void assertFile(String file, String expected) throws IOException {
-        List<String> actual = IOUtils.readLines(new InputStreamReader(new FileInputStream(file), "utf-8"));
-        assertEquals(expected, actual.toString());
+                "[file 'output1.flv', " +
+                        "file 'output2.flv', " +
+                        "file 'output3.flv']");
     }
 
 }
