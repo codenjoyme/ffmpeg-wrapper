@@ -58,10 +58,14 @@ public class Cutter {
     }
 
     public void run() {
+        clean();
         splitter.run();
 
-        joiner.getParts().forEach(part -> new File(part).delete());
         joiner.run();
+        clean();
+    }
+
+    private void clean() {
         joiner.getParts().forEach(part -> new File(part).delete());
     }
 }
