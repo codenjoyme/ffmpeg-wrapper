@@ -3,12 +3,17 @@ package com.apofig.ffmpeg;
 import java.io.File;
 
 public class Cutter {
+
     private Joiner joiner;
-    private Splitter2 splitter;
+    Splitter2 splitter;
 
     public Cutter(Runner runner) {
+        this(runner, new Joiner(runner));
+    }
+
+    Cutter(Runner runner, Joiner joiner) {
         splitter = new Splitter2(runner);
-        joiner = new Joiner(runner);
+        this.joiner = joiner;
     }
 
     public Cutter output(String output) {
@@ -38,10 +43,16 @@ public class Cutter {
     }
 
     private String getPartName(String from, String to) {
-        return String.format("%spart_%s_%s.flv",
+        return String.format("%spart%s_%s_%s.flv",
                 getParent(),
+                suffix(),
                 from.replaceAll(":", "-"),
                 to.replaceAll(":", "-"));
+    }
+
+    // будет переопределено у наследника
+    String suffix() {
+        return "";
     }
 
     private String getParent() {
