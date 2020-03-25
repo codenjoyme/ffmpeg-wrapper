@@ -32,7 +32,7 @@ public class Joiner {
     public void run() {
         String template = "ffmpeg -f concat -safe 0 -i %s -c copy %s";
 
-        clean();
+        cleanList();
         String list = getListFile();
 
         try (PrintWriter writer = new PrintWriter(list)) {
@@ -63,7 +63,11 @@ public class Joiner {
     }
 
     public void clean() {
-        new File(getListFile()).delete();
+        cleanList();
         parts.forEach(part -> new File(part).delete());
+    }
+
+    private void cleanList() {
+        new File(getListFile()).delete();
     }
 }
