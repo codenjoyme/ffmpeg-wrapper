@@ -11,7 +11,7 @@ public class CutterTest extends AbstractRunnerTest {
     @Test
     public void shouldCutOnePart() throws IOException {
         // when
-        new Cutter(runner)
+        cutter()
                 .input("work/input.flv")
                 .output("work/done.flv")
                 .start("00:00:00")
@@ -29,10 +29,19 @@ public class CutterTest extends AbstractRunnerTest {
                 "file 'part_01-00-00_01-40-23.flv']");
     }
 
+    private Cutter cutter() {
+        return new Cutter(runner){
+            @Override
+            void clean() {
+                // do nothing
+            }
+        };
+    }
+
     @Test
     public void shouldCutThreeParts() throws IOException {
         // when
-        new Cutter(runner)
+        cutter()
                 .input("work/input.flv")
                 .output("work/done.flv")
                 .start("00:00:00")
@@ -59,7 +68,7 @@ public class CutterTest extends AbstractRunnerTest {
     @Test
     public void shouldWithoutCut() throws IOException {
         // when
-        new Cutter(runner)
+        cutter()
                 .input("work/input.flv")
                 .output("work/done.flv")
                 .start("00:00:00")

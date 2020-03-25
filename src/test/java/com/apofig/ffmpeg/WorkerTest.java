@@ -9,7 +9,7 @@ public class WorkerTest extends AbstractRunnerTest {
     @Test
     public void shouldProcessTwoParts() throws IOException {
         // when
-        new Worker(runner)
+        worker()
                 .output("work/done.mp4")
                 .input("work/input.flv")
                     .start("00:00:00")
@@ -36,6 +36,15 @@ public class WorkerTest extends AbstractRunnerTest {
                 "file 'part_1_00-01-30_00-02-00.flv', " +
                 "file 'part_2_00-01-00_00-02-00.flv', " +
                 "file 'part_2_00-03-00_00-04-00.flv']");
+    }
+
+    private Worker worker() {
+        return new Worker(runner){
+            @Override
+            void clean() {
+                // do nothing
+            }
+        };
     }
 
 

@@ -34,6 +34,11 @@ public class Worker {
         });
 
         joiner.run();
+        clean();
+    }
+
+    void clean() {
+        joiner.clean();
     }
 
     public class CutterEx {

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Joiner {
 
+    public static final String LIST_FILE = "list.txt";
+
     private Runner runner;
     private String output;
     private List<String> parts;
@@ -30,12 +32,10 @@ public class Joiner {
     public void run() {
         String template = "ffmpeg -f concat -safe 0 -i %s -c copy %s";
 
-        String listFile = getWork() + "list.txt";
+        clean();
+        String list = getListFile();
 
-        new File(listFile).delete();
-
-        try (PrintWriter writer = new PrintWriter(listFile)) {
-
+        try (PrintWriter writer = new PrintWriter(list)) {
             parts.forEach(part -> {
                 part = part.replaceAll(getWork(), "");
                 String line = String.format("file '%s'", part);
@@ -49,16 +49,21 @@ public class Joiner {
         }
 
         String command = String.format(template,
-                listFile, output);
+                list, output);
 
         runner.execOutput(command);
     }
 
-    public List<String> getParts() {
-        return parts;
+    private String getListFile() {
+        return getWork() + LIST_FILE;
     }
 
     public String getWork() {
         return new File(output).getParent() + "/";
+    }
+
+    public void clean() {
+        new File(getListFile()).delete();
+        parts.forEach(part -> new File(part).delete());
     }
 }

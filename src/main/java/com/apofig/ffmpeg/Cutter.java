@@ -68,15 +68,15 @@ public class Cutter {
         return this;
     }
 
+    void clean() {
+        joiner.clean();
+    }
+
     public void run() {
         clean();
         splitter.run();
 
         joiner.run();
         clean();
-    }
-
-    private void clean() {
-        joiner.getParts().forEach(part -> new File(part).delete());
     }
 }
