@@ -20,13 +20,13 @@ public class CutterTest extends AbstractRunnerTest {
                 .run();
 
         // then
-        assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/part_00-00-00_00-30-00.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:40:23 work/part_01-00-00_01-40-23.flv, " +
-                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv]");
+        assertExec("ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:30:00 work/part_00-00-00_00-30-00.flv\n" +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:40:23 work/part_01-00-00_01-40-23.flv\n" +
+                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv");
 
         assertFile("work/list.txt",
-                "[file 'part_00-00-00_00-30-00.flv', " +
-                "file 'part_01-00-00_01-40-23.flv']");
+                "file 'part_00-00-00_00-30-00.flv'\n" +
+                "file 'part_01-00-00_01-40-23.flv'");
     }
 
     private Cutter cutter() {
@@ -52,17 +52,17 @@ public class CutterTest extends AbstractRunnerTest {
                 .run();
 
         // then
-        assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:10:00 work/part_00-00-00_00-10-00.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:20:00 -to 00:30:00 work/part_00-20-00_00-30-00.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:40:00 -to 00:50:00 work/part_00-40-00_00-50-00.flv, " +
-                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:10:00 work/part_01-00-00_01-10-00.flv, " +
-                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv]");
+        assertExec("ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 00:10:00 work/part_00-00-00_00-10-00.flv\n" +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:20:00 -to 00:30:00 work/part_00-20-00_00-30-00.flv\n" +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:40:00 -to 00:50:00 work/part_00-40-00_00-50-00.flv\n" +
+                "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 01:00:00 -to 01:10:00 work/part_01-00-00_01-10-00.flv\n" +
+                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv");
 
         assertFile("work/list.txt",
-                "[file 'part_00-00-00_00-10-00.flv', " +
-                "file 'part_00-20-00_00-30-00.flv', " +
-                "file 'part_00-40-00_00-50-00.flv', " +
-                "file 'part_01-00-00_01-10-00.flv']");
+                "file 'part_00-00-00_00-10-00.flv'\n" +
+                "file 'part_00-20-00_00-30-00.flv'\n" +
+                "file 'part_00-40-00_00-50-00.flv'\n" +
+                "file 'part_01-00-00_01-10-00.flv'");
     }
 
     @Test
@@ -77,11 +77,11 @@ public class CutterTest extends AbstractRunnerTest {
                 .run();
 
         // then
-        assertExec("[ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 01:00:00 work/part_00-00-00_01-00-00.flv, " +
-                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv]");
+        assertExec("ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:00:00 -to 01:00:00 work/part_00-00-00_01-00-00.flv\n" +
+                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv");
 
         assertFile("work/list.txt",
-                    "[file 'part_00-00-00_01-00-00.flv']");
+                    "file 'part_00-00-00_01-00-00.flv'");
     }
 
 

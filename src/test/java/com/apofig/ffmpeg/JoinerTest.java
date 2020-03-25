@@ -17,11 +17,12 @@ public class JoinerTest extends AbstractRunnerTest {
                 .run();
 
         // then
-        assertExec("[ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv]");
+        assertExec("ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.flv");
+
         assertFile("work/list.txt",
-                "[file 'output1.flv', " +
-                        "file 'output2.flv', " +
-                        "file 'output3.flv']");
+                "file 'output1.flv'\n" +
+                "file 'output2.flv'\n" +
+                "file 'output3.flv'");
     }
 
 }
