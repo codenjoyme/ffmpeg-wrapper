@@ -39,7 +39,7 @@ public class Audio {
     public String join(String video, String audio) {
         String template = "ffmpeg -i %s -i %s -c:v copy -map 0:v:0 -map 1:a:0 %s";
 
-        String output = video.replace(".", "-done.");
+        String output = video.replace(".", "-merged.");
         String command = String.format(template,
                 video,
                 audio,
@@ -51,13 +51,22 @@ public class Audio {
 
     public static void main(String[] args) {
         Audio worker = new Audio(new RunnerImpl());
-        String video = "work/done.mp4";
-        String audio = worker.extractWave(video);
+        String video = "work/done-done.mp4";
+        String audio = worker.delay(video, 0.3);
 
-        Worker.printWait("Please update '" + audio + "' audio, then press Enter.");
+    }
 
-        String output = worker.join(video, audio);
-        System.out.println("Please check result '" + output + "'");
+    public String delay(String video, double delay) {
+        String template = "ffmpeg.exe -i %s -itsoffset %s -i %s -map 0:v -map 1:a -c copy %s";
 
+        String output = video.replace(".", "-delayed.");
+        String command = String.format(template,
+                video,
+                delay,
+                video,
+                output);
+
+        runner.execOutput(command);
+        return output;
     }
 }
