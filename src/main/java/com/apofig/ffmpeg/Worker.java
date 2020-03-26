@@ -1,19 +1,25 @@
 package com.apofig.ffmpeg;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Worker {
 
+    private Audio audio;
     private Joiner joiner;
     private Runner runner;
     private List<CutterEx> cutters = new LinkedList<>();
     private int index;
+    private boolean changeAudio;
 
     public Worker(Runner runner) {
         this.runner = runner;
         joiner = new Joiner(runner);
         index = 1;
+        changeAudio = false;
+        audio = new Audio(runner);
     }
 
     public Worker output(String output) {
@@ -35,10 +41,36 @@ public class Worker {
 
         joiner.run();
         clean();
+
+        if (changeAudio) {
+            processAudio();
+        }
+    }
+
+    private void processAudio() {
+        String file = audio.extract(joiner.getOutput());
+
+        printWait("Please update '" + audio + "' audio, then press Enter.");
+
+        String output = audio.join(joiner.getOutput(), file);
+
+        new File(file).delete();
+
+        System.out.println("Please check result '" + output + "'");
+    }
+
+    public static void printWait(String message) {
+        System.out.println(message);
+        new Scanner(System.in).nextLine();
     }
 
     void clean() {
         joiner.clean();
+    }
+
+    public Worker replaceAudio() {
+        changeAudio = true;
+        return this;
     }
 
     public class CutterEx {

@@ -19,6 +19,7 @@ public class Main {
                 .input("work/input2.flv")
                     .start("00:00:00")
                     .end("00:01:52")
+                .replaceAudio()
                 .run();
     }
 }

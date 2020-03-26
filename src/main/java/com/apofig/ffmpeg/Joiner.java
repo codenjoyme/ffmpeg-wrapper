@@ -70,4 +70,8 @@ public class Joiner {
     private void cleanList() {
         new File(getListFile()).delete();
     }
+
+    public String getOutput() {
+        return output;
+    }
 }
