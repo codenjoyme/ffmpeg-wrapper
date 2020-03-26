@@ -50,13 +50,17 @@ public class Worker {
     private void processAudio() {
         String file = audio.extract(joiner.getOutput());
 
-        printWait("Please update '" + audio + "' audio, then press Enter.");
+        waitAudio();
 
         String output = audio.join(joiner.getOutput(), file);
 
         new File(file).delete();
 
         System.out.println("Please check result '" + output + "'");
+    }
+
+    void waitAudio() {
+        printWait("Please update '" + audio + "' audio, then press Enter.");
     }
 
     public static void printWait(String message) {

@@ -20,6 +20,7 @@ public class WorkerTest extends AbstractRunnerTest {
                     .start("00:01:00")
                     .cut("00:02:00", "00:03:00")
                     .end("00:04:00")
+                .replaceAudio()
                 .run();
 
         // then
@@ -28,7 +29,11 @@ public class WorkerTest extends AbstractRunnerTest {
                 "ffmpeg -i work/input.flv -vcodec copy -acodec copy -ss 00:01:30 -to 00:02:00 work/part_1_00-01-30_00-02-00.flv\n" +
                 "ffmpeg -i work/input2.flv -vcodec copy -acodec copy -ss 00:01:00 -to 00:02:00 work/part_2_00-01-00_00-02-00.flv\n" +
                 "ffmpeg -i work/input2.flv -vcodec copy -acodec copy -ss 00:03:00 -to 00:04:00 work/part_2_00-03-00_00-04-00.flv\n" +
-                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.mp4");
+
+                "ffmpeg -f concat -safe 0 -i work/list.txt -c copy work/done.mp4\n" +
+
+                "ffmpeg -i work/done.mp4 -vn -acodec copy work/done-audio.mp4\n" +
+                "ffmpeg -i work/done.mp4 -i work/done-audio.mp4 -c:v copy -map 0:v:0 -map 1:a:0 work/done-done.mp4");
 
         assertFile("work/list.txt",
                 "file 'part_1_00-00-00_00-00-30.flv'\n" +
@@ -42,6 +47,11 @@ public class WorkerTest extends AbstractRunnerTest {
         return new Worker(runner){
             @Override
             void clean() {
+                // do nothing
+            }
+
+            @Override
+            void waitAudio() {
                 // do nothing
             }
         };
